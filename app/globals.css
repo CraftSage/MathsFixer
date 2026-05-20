@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-rgb: 248, 250, 252;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.math-preview {
+  font-family: 'Times New Roman', serif;
+  line-height: 2;
+}
+
+.math-preview .frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  margin: 0 2px;
+}
+
+.math-preview .frac .num {
+  border-bottom: 1px solid currentColor;
+  padding: 0 2px;
+  text-align: center;
+}
+
+.math-preview .frac .den {
+  padding: 0 2px;
+  text-align: center;
+}
+
+.math-preview .sqrt {
+  display: inline-flex;
+  align-items: center;
+}
+
+.math-preview .sqrt .radicand {
+  border-top: 1.5px solid currentColor;
+  padding: 0 2px;
+}
+
+.chat-bubble-user {
+  background: #2563eb;
+  color: white;
+  border-radius: 18px 18px 4px 18px;
+}
+
+.chat-bubble-ai {
+  background: white;
+  color: #1e293b;
+  border-radius: 18px 18px 18px 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.scrollbar-thin::-webkit-scrollbar { width: 6px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #64748b; }
