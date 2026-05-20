@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
 
-export const runtime = 'nodejs'; // Must be Node.js runtime — not Edge
+export const runtime = 'nodejs';   // Node.js runtime — not Edge
+export const maxDuration = 60;     // Allow up to 60s for Groq API calls (Vercel Pro: 300s)
 
 // ============================================================
 // WHERE TO ADD YOUR GROQ API KEY:

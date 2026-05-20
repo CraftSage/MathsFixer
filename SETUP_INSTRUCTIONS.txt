@@ -1,45 +1,25 @@
-
 HOW TO ADD YOUR GROQ API KEY
 ==============================
 
-The AI Chat tab needs a Groq API key. You have 3 options:
+OPTION 1 — Enter key in the app UI (easiest):
+  Open the app → AI Chat tab → "Set API Key" → paste gsk_... → Save
+  (stored in your browser localStorage, sent with every request)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-OPTION 1 — Enter key in the app UI (easiest, no deploy needed)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Open the app in your browser
-2. Go to the "AI Chat" tab
-3. Click "Set API Key" (top right of the chat panel)
-4. Paste your key (gsk_...)
-5. Click Save — it's stored in your browser localStorage
+OPTION 2 — Vercel environment variable (recommended for production):
+  Vercel dashboard → Your project → Settings → Environment Variables
+  Add:  GROQ_API_KEY = gsk_xxxxxxxxxxxxxxxx
+  Then Redeploy.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-OPTION 2 — Vercel environment variable (for production)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Go to vercel.com → your deployed project
-2. Settings → Environment Variables
-3. Add:  Name = GROQ_API_KEY   |   Value = gsk_xxxxxxxx
-4. Click Save, then Redeploy
+OPTION 3 — Hardcode in source (quick test only, don't commit to public repos):
+  Open: app/api/process/route.ts
+  Find:  || 'YOUR_GROQ_API_KEY_HERE'
+  Replace with your actual key string.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-OPTION 3 — Hardcode in source (quick test only)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Open:  app/api/process/route.ts
-Find:  const resolvedKey = process.env.GROQ_API_KEY || clientApiKey || 'YOUR_GROQ_API_KEY_HERE';
-Edit:  Replace 'YOUR_GROQ_API_KEY_HERE' with your actual key string.
+Get a FREE Groq key at: https://console.groq.com
 
-⚠️  Don't commit a hardcoded key to a PUBLIC GitHub repo.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DEPLOYMENT STEPS (Vercel)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Rename files:
-     gitignore.txt          →   .gitignore
-     env.example.txt        →   .env.example
-2. npm install
-3. Push to GitHub (public or private)
-4. vercel.com → Add New Project → Import your repo
-5. Add GROQ_API_KEY in Environment Variables section
-6. Deploy!
-
-Get a free Groq API key at: https://console.groq.com
+DEPLOYMENT STEPS:
+  1. npm install
+  2. Push to GitHub
+  3. vercel.com → New Project → Import repo
+  4. Add GROQ_API_KEY in Environment Variables
+  5. Deploy!

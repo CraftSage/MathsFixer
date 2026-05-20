@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ConversionOptions, getUnicode } from '@/lib/mathConverter';
 
-export const runtime = 'nodejs'; // Ensure Node.js runtime (not Edge) for docx/jsPDF
+export const runtime = 'nodejs';  // Ensure Node.js runtime (not Edge) for docx/jsPDF
+export const maxDuration = 60;    // Allow up to 60s for large document conversion (Vercel Pro: 300s)
 
 export async function POST(req: NextRequest) {
   try {
