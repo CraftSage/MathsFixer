@@ -365,6 +365,11 @@ export default function Home() {
       const data = await res.json();
       if (data.error) throw new Error(`Page ${i}: ${data.error}`);
       allText.push(`--- Page ${i} ---\n${data.text}`);
+      // Delay between pages to respect Groq free tier rate limits
+      if (i < totalPages) {
+        onProgress(`Page ${i} done ✓ — waiting 5s before next page…`);
+        await new Promise(r => setTimeout(r, 5000));
+      }
     }
     return allText.join("\n\n");
   }, []);
