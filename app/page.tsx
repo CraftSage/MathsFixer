@@ -316,7 +316,7 @@ export default function Home() {
   const extractPDFText = useCallback(async (file:File):Promise<{text:string; isImageBased:boolean}> => {
     const arrayBuffer = await file.arrayBuffer();
     const pdfjsLib = await import("pdfjs-dist");
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js`;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.2.67/build/pdf.worker.min.mjs`;
     const pdf = await pdfjsLib.getDocument({data:arrayBuffer}).promise;
     let fullText = "";
     let totalChars = 0;
@@ -337,7 +337,7 @@ export default function Home() {
   const ocrPDFWithVision = useCallback(async (file:File, onProgress:(msg:string)=>void):Promise<string> => {
     const arrayBuffer = await file.arrayBuffer();
     const pdfjsLib = await import("pdfjs-dist");
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js`;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@4.2.67/build/pdf.worker.min.mjs`;
     const pdf = await pdfjsLib.getDocument({data:arrayBuffer}).promise;
     const totalPages = pdf.numPages;
     const allText: string[] = [];
