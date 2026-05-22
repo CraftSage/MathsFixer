@@ -1,19 +1,23 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: 'MathPDF Converter',
-  description: 'Convert PDF math notation to proper formatted fractions, radicals, and more',
-}
+  title: "MathPDF Converter",
+  description: "AI-powered PDF math notation fixer — roots, fractions, Greek letters & more",
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-slate-50">{children}</body>
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css"
+          integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body>{children}</body>
     </html>
-  )
+  );
 }

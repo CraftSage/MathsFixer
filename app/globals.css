@@ -1,66 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 15, 23, 42;
-  --background-rgb: 248, 250, 252;
+  --bg: #0a0a0f;
+  --surface: #111118;
+  --surface2: #1a1a24;
+  --border: #2a2a3a;
+  --accent: #6c63ff;
+  --accent2: #ff6584;
+  --accent3: #43e97b;
+  --text: #e8e8f0;
+  --muted: #6b6b80;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-.math-preview {
-  font-family: 'Times New Roman', serif;
-  line-height: 2;
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* KaTeX overrides for dark mode */
+.katex { color: var(--text) !important; font-size: 1em !important; }
+.katex-display { overflow-x: auto; padding: 8px 0; }
+
+/* Custom animations */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(108,99,255,0.3); }
+  50% { box-shadow: 0 0 25px rgba(108,99,255,0.6); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-.math-preview .frac {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  vertical-align: middle;
-  margin: 0 2px;
+.animate-fade-in { animation: fadeIn 0.4s ease forwards; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 3s linear infinite; }
+
+.shimmer-btn {
+  background: linear-gradient(90deg, var(--accent) 0%, #9c91ff 40%, var(--accent2) 60%, var(--accent) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
 }
 
-.math-preview .frac .num {
-  border-bottom: 1px solid currentColor;
-  padding: 0 2px;
-  text-align: center;
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed var(--border);
+  transition: all 0.3s;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--accent);
+  background: rgba(108,99,255,0.05);
+  box-shadow: 0 0 30px rgba(108,99,255,0.15);
 }
 
-.math-preview .frac .den {
-  padding: 0 2px;
-  text-align: center;
-}
-
-.math-preview .sqrt {
-  display: inline-flex;
-  align-items: center;
-}
-
-.math-preview .sqrt .radicand {
-  border-top: 1.5px solid currentColor;
-  padding: 0 2px;
-}
-
-.chat-bubble-user {
-  background: #2563eb;
+/* Tab active */
+.tab-active {
+  background: var(--accent);
   color: white;
-  border-radius: 18px 18px 4px 18px;
 }
 
-.chat-bubble-ai {
-  background: white;
-  color: #1e293b;
-  border-radius: 18px 18px 18px 4px;
-  border: 1px solid #e2e8f0;
+/* Checkbox custom */
+.custom-check {
+  appearance: none;
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface2);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.custom-check:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.custom-check:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
 }
 
-.scrollbar-thin::-webkit-scrollbar { width: 6px; }
-.scrollbar-thin::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
-.scrollbar-thin::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 3px; }
-.scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #64748b; }
+/* Chat message */
+.msg-user { align-self: flex-end; background: var(--accent); border-radius: 16px 16px 4px 16px; }
+.msg-ai { align-self: flex-start; background: var(--surface2); border-radius: 16px 16px 16px 4px; border: 1px solid var(--border); }
+
+/* Code block inside chat */
+pre { background: #0d0d14 !important; border-radius: 8px; padding: 12px; overflow-x: auto; }
+code { font-family: 'Space Mono', monospace; font-size: 0.8em; }
+
+/* Prose in AI response */
+.ai-prose p { margin-bottom: 8px; line-height: 1.7; }
+.ai-prose ul { margin-left: 16px; margin-bottom: 8px; }
+.ai-prose li { margin-bottom: 4px; list-style: disc; }
+.ai-prose h1,.ai-prose h2,.ai-prose h3 { font-weight: 700; margin-bottom: 6px; color: #b8b5ff; }
+
+/* Loading dots */
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+.dot-1 { animation: dot-bounce 1.2s infinite 0s; }
+.dot-2 { animation: dot-bounce 1.2s infinite 0.2s; }
+.dot-3 { animation: dot-bounce 1.2s infinite 0.4s; }
+
+/* KaTeX loaded via CDN in layout */

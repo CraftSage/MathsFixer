@@ -1,3 +1,17 @@
 {
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install --legacy-peer-deps",
+  "functions": {
+    "app/api/chat/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/export-word/route.ts": {
+      "maxDuration": 60
+    },
+    "app/api/export-pdf/route.ts": {
+      "maxDuration": 60
+    }
+  }
 }

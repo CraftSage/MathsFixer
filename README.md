@@ -1,98 +1,104 @@
 # MathPDF Converter
 
-A web app to convert PDFs with plain-text math notation (like `√` and `1/2`) into properly formatted mathematical symbols. Export as Word (.docx) or PDF.
+**AI-powered web app** that takes a PDF with plain-text math notation and converts it to properly formatted symbols — then exports as a Word `.docx` or PDF.
 
-## Features
+---
 
-- 📄 **PDF Upload** — drag & drop or click to upload
-- 🔢 **15 Conversion Options** — fractions, roots, superscripts, subscripts, Greek letters, operators, and more
-- 👁️ **Live Preview** — see converted text before downloading, with side-by-side original vs converted
-- 🤖 **AI Chat** (Groq) — ask the AI to make custom edits to your document
-- 📥 **Download** — export as Word (.docx) or PDF
+## ✨ What it fixes
 
-## Deployment on Vercel
+| Input (broken) | Output (fixed) |
+|---|---|
+| `sqrt(x+1)` | `√(x+1)` |
+| `x^2 + y^2` | `x² + y²` |
+| `H_2O` | `H₂O` |
+| `alpha + beta` | `α + β` |
+| `a/b` | proper fraction |
+| `>= or !=` | `≥ or ≠` |
+| `inf` | `∞` |
+| `90 deg` | `90°` |
+| `CO2` | `CO₂` |
 
-### Step 1: Get your Groq API Key
+---
 
-1. Go to [https://console.groq.com](https://console.groq.com)
-2. Sign up or log in
-3. Navigate to **API Keys** and click **Create API Key**
-4. Copy the key (starts with `gsk_...`)
+## 🚀 Setup (5 minutes)
 
-### Step 2: Deploy to Vercel
+### 1. Get a Groq API Key
 
-**Option A — Import from GitHub (Recommended):**
-1. Push this code to a GitHub repository
-2. Go to [https://vercel.com](https://vercel.com) and click **Add New Project**
-3. Import your GitHub repo
-4. In the **Environment Variables** section, add:
-   - Name: `GROQ_API_KEY`
-   - Value: `gsk_your_actual_key_here`
-5. Click **Deploy**
+> 👉 Go to **https://console.groq.com/keys** → Create a key → Copy it
 
-**Option B — Vercel CLI:**
-```bash
-npm install -g vercel
-cd mathpdf-app
-npm install
-vercel --prod
-# When prompted for env vars, add GROQ_API_KEY
+### 2. Add your key
+
+Create a file called `.env.local` in the project root:
+
+```
+GROQ_API_KEY=gsk_your_actual_key_here
 ```
 
-### Step 3: Add API Key Directly in Code (Alternative)
+> **That's the only thing you need to change.** The key location is clearly marked in all route files too.
 
-If you don't want to use environment variables, open:
-```
-app/api/process/route.ts
-```
-
-Find this line:
-```typescript
-const GROQ_API_KEY = process.env.GROQ_API_KEY || 'YOUR_GROQ_API_KEY_HERE';
-```
-
-Replace `YOUR_GROQ_API_KEY_HERE` with your actual key:
-```typescript
-const GROQ_API_KEY = process.env.GROQ_API_KEY || 'gsk_xxxxxxxxxxxx';
-```
-
-> ⚠️ **Note:** If you hardcode the key, make sure not to push it to a public GitHub repo.
-
-## Local Development
+### 3. Run locally
 
 ```bash
 npm install
-cp .env.example .env.local
-# Edit .env.local and add your GROQ_API_KEY
 npm run dev
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+---
 
-## Conversion Options
+## ☁️ Deploy to Vercel (free)
 
-| Option | Example |
-|--------|---------|
-| Proper Fractions | `1/2` → `½`, `(x+1)/(2a)` |
-| Square Roots | `sqrt(x)` → `√(x)` |
-| Cube/Nth Roots | `cbrt(x)` → `∛(x)` |
-| Superscripts | `x^2` → `x²` |
-| Subscripts | `x_1` → `x₁` |
-| Greek Letters | `alpha` → `α`, `theta` → `θ` |
-| Pi Symbol | `pi` → `π` |
-| Infinity | `infinity` → `∞` |
-| Operators | `+-` → `±`, `div` → `÷` |
-| Multiplication | `3 * 4` → `3 × 4` |
-| Inequalities | `<=` → `≤`, `>=` → `≥` |
-| Arrows | `->` → `→`, `=>` → `⇒` |
-| Fix Spacing | `x  =  2` → `x = 2` |
+1. Push this folder to a GitHub repo
+2. Go to **vercel.com** → Import that repo
+3. In Vercel project → **Settings → Environment Variables**
+4. Add: `GROQ_API_KEY` = `gsk_your_actual_key_here`
+5. Deploy → Done!
 
-## Tech Stack
+---
 
-- **Framework:** Next.js 14 (App Router)
-- **UI:** Tailwind CSS + Lucide Icons
-- **PDF Parsing:** PDF.js (client-side)
-- **Word Export:** docx
-- **PDF Export:** jsPDF
-- **AI:** Groq (llama-3.3-70b-versatile)
-- **Deployment:** Vercel
+## 🗂️ App Tabs
+
+| Tab | Purpose |
+|---|---|
+| **Upload** | Drop your PDF here — text is extracted in-browser |
+| **Chat** | Ask the AI about your document, preview changes, get suggestions |
+| **Filters** | Tick exactly which transformations to apply (24 options across 4 groups) |
+| **Preview** | Side-by-side original vs processed text |
+
+---
+
+## 📤 Export Options
+
+- **Word (.docx)** — AI processes the text then generates a formatted Word document
+- **PDF** — AI processes the text, then opens browser print dialog (Save as PDF)
+- **Use AI toggle** — Turn off to use fast local-only transforms (no API call)
+
+---
+
+## 🔧 Where to find the API key in code
+
+- `app/api/chat/route.ts` — line 10: `const GROQ_API_KEY = process.env.GROQ_API_KEY;`
+- `app/api/export-word/route.ts` — line 14: same
+- `app/api/export-pdf/route.ts` — line 4: same
+
+All three read from the same environment variable.
+
+---
+
+## 📦 Tech Stack
+
+- **Next.js 14** (App Router)
+- **Groq API** with `llama-3.3-70b-versatile`
+- **pdf.js** for in-browser PDF text extraction
+- **docx** npm package for Word generation
+- **KaTeX** for math rendering in chat
+- **Tailwind CSS**
+
+---
+
+## 💡 Tips
+
+- PDFs with **selectable text** work best (not scanned images)
+- For scanned PDFs, try an OCR tool first (e.g. Adobe, ilovepdf.com)
+- The **Chat tab** is great for asking "which filters should I use?" before exporting
+- The AI model (Groq Llama 3.3 70B) is very fast — typically under 3 seconds
