@@ -368,7 +368,7 @@ export default function Home() {
       // Delay between pages to respect Groq free tier rate limits
       if (i < totalPages) {
         onProgress(`Page ${i} done ✓ — waiting 5s before next page…`);
-        await new Promise(r => setTimeout(r, 5000));
+        await new Promise(r => setTimeout(r, 8000));
       }
     }
     return allText.join("\n\n");
